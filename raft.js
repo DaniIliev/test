@@ -1,9 +1,12 @@
-function raft(firstLine, secondLine){
+function raft(input){
+
+    const firstLine = input[0].split(' ');
+    const secondLine = input[1];
 
     const N = Number(firstLine[0]);
     const K = Number(firstLine[1]);
     
-    const weights = secondLine.map(a => Number(a))
+    const weights = secondLine.split(' ').map(a => Number(a))
     
     
     if(N < 1 || N > 1000){
@@ -23,8 +26,12 @@ function raft(firstLine, secondLine){
     
     const sortDescWeights = weights.sort((a,b) => b-a);
     let minimumCapacity = sortDescWeights[0];
-    
-    let arrayWeightsManipulation = sortDescWeights;
+
+    let arrayWeightsManipulation = []
+    for (const elem of sortDescWeights) {
+        arrayWeightsManipulation.push(elem)
+    }
+
     let goatsNumberManipulation = N;
     
         while(true){
@@ -40,13 +47,17 @@ function raft(firstLine, secondLine){
                         j++
                         continue
                     }
-                    arrayWeightsManipulation = arrayWeightsManipulation.filter((y) => y != arrayWeightsManipulation.slice(j, j+1))
+
+                    arrayWeightsManipulation.splice(j, 1)
                     goatsNumberManipulation--
                 }
             }
     
             if(arrayWeightsManipulation.length != 0){
-                arrayWeightsManipulation = sortDescWeights;
+                arrayWeightsManipulation = []
+                for (const elem of sortDescWeights) {
+                    arrayWeightsManipulation.push(elem)
+                }
                 goatsNumberManipulation = N;
                 minimumCapacity++
             }
@@ -58,13 +69,7 @@ function raft(firstLine, secondLine){
         }
     }
     
-    let firstLine = [20,3];
-    let secondLine = [52, 17946, 27160, 387, 17346, 27505, 20816, 20577, 10961, 6021, 5262, 28278, 24163, 931, 11003, 19738, 17914, 1683, 10320, 10475]
     
-    // let firstLine = [15,3]
-    // let secondLine = [666, 42, 7, 13, 400, 511, 600, 200, 202, 111, 313, 94, 280, 72,42]
-    
-    // let firstLine = [6,2]
-    // let secondLine = [4,8,15,16,23,42]
-    
-    raft(firstLine,secondLine)
+    raft(['6 2', '4 8 15 16 23 42'])
+    raft(['15 3', '666 42 7 13 400 511 600 200 202 111 313 94 280 72 42'])
+    raft(['20 3', '52 17946 27160 387 17346 27505 20816 20577 10961 6021 5262 28278 24163 931 11003 19738 17914 1683 10320 10475'])
